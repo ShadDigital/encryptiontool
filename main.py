@@ -95,6 +95,9 @@ class EncryptionTool(TkinterDnD.Tk):
         
             actual_hash = hashlib.sha256(normalized_content).hexdigest().lower()
 
+            print(f"DEBUG: I got from GitHub: [{expected_hash}]")
+            print(f"DEBUG: I calculated:    [{actual_hash}]")
+
             if actual_hash != expected_hash:
                 messagebox.showerror("Security Error", "Update verification failed! Fingerprint mismatch.")
                 os.remove("main_new.py") # Delete the "bad" file
