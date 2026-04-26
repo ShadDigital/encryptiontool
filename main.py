@@ -91,11 +91,9 @@ class EncryptionTool(TkinterDnD.Tk):
             
             expected_hash = requests.get(expected_hash_url).text.strip().lower()
 
-            sha256_hash = hashlib.sha256()
-            with open("main_new.py", "rb") as f:
-                for byte_block in iter(lambda: f.read(4096), b""):
-                    sha256_hash.update(byte_block)
-            actual_hash = sha256_hash.hexdigest().lower()
+            normalized_content = response.content.replace(b"\r\n", b"\n")
+        
+            actual_hash = hashlib.sha256(normalized_content).hexdigest().lower()
 
             if actual_hash != expected_hash:
                 messagebox.showerror("Security Error", "Update verification failed! Fingerprint mismatch.")
