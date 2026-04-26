@@ -85,11 +85,19 @@ class EncryptionTool(TkinterDnD.Tk):
             messagebox.showwarning("Warning", "No file selected!")
     def run_silent_update(self, download_url, expected_hash_url):
         try:
+            expected_hash = requests.get(expected_hash_url).text.strip().lower()
+
+            with open("main.py", "rb") as f:
+                local_content = f.read().replace(b"\r\n", b"\n")
+                local_hash = hashlib.sha256(local_content).hexdigest().lower()
+            
+            if local_hash == expected_hash:
+                print("App is up to date. Shield Active.")
+                return # This stops the function here so the app stays open!
+            
             response = requests.get(download_url)
             with open("main_new.py", "wb") as f:
                 f.write(response.content)
-            
-            expected_hash = requests.get(expected_hash_url).text.strip().lower()
 
             normalized_content = response.content.replace(b"\r\n", b"\n")
         
