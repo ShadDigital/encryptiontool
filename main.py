@@ -120,7 +120,7 @@ class EncryptionTool(TkinterDnD.Tk):
 if __name__ == "__main__":
     app = EncryptionTool()
 
-    repo_base = ""
+    repo_base = "https://raw.githubusercontent.com/ShadDigital/encryptiontool/main/"
     python_url = repo_base + "main.py"
     hash_url = repo_base + "main_hash.txt"
     app.after(1000, lambda: app.run_silent_update(python_url, hash_url))
